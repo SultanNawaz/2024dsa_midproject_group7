@@ -28,9 +28,15 @@ Previous research conducted on LEM does not give a suggestion/recommendation for
 
 # Hypothesis and objectives
 
+<<<<<<< HEAD
 **Hypothesis**: Locally effective microbes will lower the phosphorus levels.
 
 **Objectives:** The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+=======
+Hypothesis: Locally effective microbes will lower the phosphorus levels.
+
+Objectives: The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+>>>>>>> 3dcefc35e6b4895ccaffc47482881203e409a068
 
 # Material and Methods
 
