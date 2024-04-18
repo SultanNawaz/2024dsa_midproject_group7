@@ -60,61 +60,53 @@ Linear assumptions including independence, normality, homeocedasity and outliers
 
 ##Here we will load the packages that we think will be used in this data set
 
-```{r}
-install.packages("tidyverse")
-install.packages("car")
-install.packages("lme4")
-install.packages("broom")
-install.packages("emmeans")
-install.packages("multcomp")
+```{r Packages}
+#install.packages("tidyverse")
+#install.packages("car")
+#install.packages("lme4")
+#install.packages("broom")
+#install.packages("emmeans")
+#install.packages("multcomp")
 
 #Loading packaes to library
 
 library(tidyverse) # for data wrangling and plotting
-
- library(car) # for Anova function 
+library(car) # for Anova function 
 library(lme4) 
-
 library(broom) # for model residuals extraction 
-
 library(emmeans) # for model mean extraction
-
- library(multcomp) # for pairwise comparison letter display
+library(multcomp) # for pairwise comparison letter display
 
 ```
-
-```{##Here we are importing our data from the source file}
-{r data import}
-
+{##Here we are importing our data from the source file}
+```{r data import}
       mid_df <- read.csv("../Data/Mid-Term Project.csv")
 
 mid_df
 
 ```
 
+
+
 ##data imported looks okay to run for exploratory data analysis
 
 # b) EDA tables
-
-```{##We are running code for explanatory data analysis to understand data,idetify relationship, check data quality etc.}
-
-{r summary}
+{##We are running code for explanatory data analysis to understand data,idetify relationship, check data quality etc.}
+```{r summary_df}
 summary(mid_df)
 ```
 
 ##The summary above shows that there are 9 treatments with LEM rates of 0, 1.8, and 3.6 where PO4 ranged from a minimum of 12.02 to a maximum of 147.81
 
-```{##WE will use glimpse here to see how our data looks like,}
-
-{r glimpse}
+{##WE will use glimpse here to see how our data looks like}
+```{r glimpse}
 glimpse(mid_df)
 ```
 
 # c) Wrangling
 
-```{## Here come the process of gathering and transforming the data according to our required analysis.}
-
-{r mid_dfw}
+{## Here come the process of gathering and transforming the data according to our required analysis.}
+```{r mid_dfw}
 mid_dfw <- mid_df %>%
   mutate(Replication = factor(Replication),
          LEM.rate..L.m2. = factor(LEM.rate..L.m2.)
@@ -123,19 +115,20 @@ mid_dfw <- mid_df %>%
   janitor::clean_names()
 
 mid_dfw
+```
 
 ## Additionally we did use the Janitor function to clean the names and make it more presntable.  
+```{r summary_dfw}
+
+summary(mid_dfw)
+mid_dfw
 ```
 
-```{r mid-dfw}
-summary(mid_dfw)
-```
 
 # d) EDA plots
+{## In this chunk we presnted our data in plot (boxplot) where data points of data sets are presented with three different colors, each representing level/rate of LEM.}
 
-```{## In this chunk we presnted our data in plot (boxplot) where data points of data sets are presented with three different colors, each representing level/rate of LEM.}
-
-{r LEM boxplot}
+```{r LEM boxplot}
 ggplot(mid_dfw, aes(x = lem_rate_l_m2, 
                     y = po4_mg_kg,
                     color = lem_rate_l_m2)) +
@@ -143,6 +136,7 @@ ggplot(mid_dfw, aes(x = lem_rate_l_m2,
   geom_jitter() +
   theme(legend.position = "none")
 ```
+
 
 ##Box plots here suggest that LEM rate of Zero has higher values but we can confirm it after running the models and see ANOVA
 
@@ -174,7 +168,8 @@ summary(mid_mix_mod)
 
 ```{## Here we are running ANOVA to identify significant effect of independent variables over dependent variables, test our hypothesis. ANOVA allow us determine significance based on p-value, and provide a framework for multiple comparisons.}
 
-{r ANOVA}
+
+```{r ANOVA}
 Anova(mid_mix_mod, type=3)
 ```
 
