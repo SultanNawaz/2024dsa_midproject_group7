@@ -1,0 +1,75 @@
+---
+title: "Mid_Term"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+# Mid-term project GitHub repository URL:
+
+<https://github.com/SultanNawaz/2024dsa_midproject_group7.git>\
+
+-   Student 2, after cloning, does a git pull to get all these updates on their computer.\
+-   Student 1 and 2 work together to update the README file. README files should explain what the repository is about, the goals of that project, who is working in it, and any other important details you may find.
+
+# Introduction
+
+With the increasing population, the world needs more food to feed on and for such purposes, intensive agriculture is taking place around the globe to feed and gain profits. To get more agricultural outputs many practices including fertilizers
+
+Gap: Previous research conducted on LEM does not give a suggestion/recommendation of application rates to crops. Additionally, phosphorus behaves differently in different soil and environmental conditions. Applying LEM at different rates will enable us to understand the potential of microbes in nutrient uptake by plants which will add significance in reducing P levels of the soil. The data on P content in the soil after LEM application will be collected for the next 2 years, and will help us to assess whether or not LEM has helped us to lower the P concentration in the soil.
+
+Describe here the introduction of your problem. Consider this as a shortened version of your paper, where you will briefly discuss in 3-4 paragraphs what is the issue/gap in literature, and how the data you collected will help answer this gap.
+
+# Hypothesis and objectives
+
+Hypothesis: Locally effective microbes will lower the phosphorus levels. Objectives: The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+
+# Material and Methods
+
+Site and liquid effective microbes preparation: This study was conducted at Horticulture farm in Watkinsville, Georgia in 2023 to test the effectiveness of locally effective microbes (LEM) in phosphorus draw-down at organic fields that was fertilized with organic inputs for 10 years. To make solid LEM, inoculum was collected from a hardwood, pine and mixed forest located in Watkinsville and was kept at in air tight container at room temperature for at least 4 weeks for fermentation after mixing it with crushed charocoal, yeast, 50 pounds of semolina, a gallon of molasses,unpasteurized goat milk and water. After fermentation, the liquid LEM was prepared by taking 3kg of solid LEM and hanging it in a 12 gallon bucket with a gallon of molasses and 8 gallons of water and keeping at room temperature for at least 3 weeks. This liquid LEM will be applied to the field.
+
+Planting, LEM application and soil sampling:
+
+Corn (wapsie) was planted at experimental site on May 15, 2022. LEM was applied at 0, 1.8 and 3.6 litre per meter square to the soil around the corn stems, whereas the soil samples were collected after 4 weeks of LEM application from a depth of 0-15cm with a soil probe.
+
+## Study design
+
+Randomized complete block design with repeated measure will be used in this project. Factor include locally effective microbes rates with three levels (0, 1.8L/m2 and 3.6L/m2) applied to 4 blocks making 36 experimental plots in total. Every block received each level of LEM 3 times as replicated thrice.
+
+## Statistical analysis
+
+For statistical analysis RCB design was used with the help of R-software. Response variable in this study was phosphorus content in the soil whereas LEM rates were explanatory variables.The explanatory variables were treated randomly. The alpha level (P-value) was 0.05. Functions used during analysis were ....... used from packages ....Linear assumptions were checked ....and they did/did not meet.....
+
+Describe here your statistical analysis, including what type of ANOVA model you ran (based on the design above), what was your response variable, what were your explanatory variables and how were the explanatory variables treated (random or fixed). Provide your alpha level. Explain which function from which package you used to analyze this data. Explain how you checked linear model assumptions and whether or not they were met.
+
+## Running Code
+
+```{r}
+install.packages("tidyverse")
+install.packages("car")
+install.packages("lme4")
+install.packages("broom")
+install.packages("emmeans")
+install.packages("multcomp")
+
+library(tidyverse) # for data wrangling and plotting
+
+ library(car) # for Anova function 
+library(lme4) 
+
+library(broom) # for model residuals extraction 
+
+library(emmeans) # for model mean extraction
+
+ library(multcomp) # for pairwise comparison letter display
+
+```
+
+```{r data import}
+rcbd_df <-read.csv("../Data/wheat_nk_balkh.csv")
+
+rcbd_df
+```
