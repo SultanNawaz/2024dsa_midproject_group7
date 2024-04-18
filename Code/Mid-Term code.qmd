@@ -25,7 +25,9 @@ Describe here the introduction of your problem. Consider this as a shortened ver
 
 # Hypothesis and objectives
 
-Hypothesis: Locally effective microbes will lower the phosphorus levels. Objectives: The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+Hypothesis: Locally effective microbes will lower the phosphorus levels.
+
+Objectives: The objective of our study is to determine phosphorus content with the application of locally effective microbes.
 
 # Material and Methods
 
