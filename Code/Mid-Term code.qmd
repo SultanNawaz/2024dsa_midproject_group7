@@ -1,31 +1,36 @@
 ---
-title: "Mid_Term"
-format: html
-editor: visual
+title: "Mid-term project "
+author: "Sultan Nawaz & MUHAMMAD USMAN KHALID"
+format:
+  html:
+    code-fold: false
+    embed-resources: true
+    toc: true
+    number-sections: true
+    theme: cerulean
 ---
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
 # Mid-term project GitHub repository URL:
 
 <https://github.com/SultanNawaz/2024dsa_midproject_group7.git>\
 
--   Student 2, after cloning, does a git pull to get all these updates on their computer.\
--   Student 1 and 2 work together to update the README file. README files should explain what the repository is about, the goals of that project, who is working in it, and any other important details you may find.
-
 # Introduction
 
-With the increasing population, the world needs more food to feed on and for such purposes, intensive agriculture is taking place around the globe to feed and gain profits. To get more agricultural outputs many practices including fertilizers
+With the increasing population, the world needs more food to feed on and for such purposes, intensive agriculture is taking place around the globe to feed and gain profits. To get more agricultural outputs many practices have been implemented and adopted by the agricultural and farming community. Using inputs like phosphatic fertilizers and chemicals including weedicides and pesticides to prevent weeds and pests are harmful to both soil and plants.
 
-Gap: Previous research conducted on LEM does not give a suggestion/recommendation of application rates to crops. Additionally, phosphorus behaves differently in different soil and environmental conditions. Applying LEM at different rates will enable us to understand the potential of microbes in nutrient uptake by plants which will add significance in reducing P levels of the soil. The data on P content in the soil after LEM application will be collected for the next 2 years, and will help us to assess whether or not LEM has helped us to lower the P concentration in the soil.
+Phosphorus is an important nutrient to both plants and soil. Phosphorus has its pros and cons, therefore, its wide use is monitored to reduce environmental effects. The use of phosphorus in excess amounts is more often associated with Eutrophication, which is the leading threat to marine life.
 
-Describe here the introduction of your problem. Consider this as a shortened version of your paper, where you will briefly discuss in 3-4 paragraphs what is the issue/gap in literature, and how the data you collected will help answer this gap.
+With the increased use of phosphatic fertilizers, worldwide phosphorus reserves are declining at a very high speed. Researchers all over the globe are active in research to come up with a protocol where we could identify and use microbes to make P available which is usually bound to soil aggregates due to its complexes with Al and Fe in low pH soils and bound to Ca and Mg in alkaline soils. Much research published has witnessed the P-mineralization with the help of microbes including some bacteria and fungi. Keeping the same in mind we came up with a research where we will use some microbes and will use it with certain rates to assess what rates can be significant to use.
+
+**Research gap:**
+
+Previous research conducted on LEM does not give a suggestion/recommendation for the application rates to crops. Additionally, phosphorus behaves differently in different soil and environmental conditions. Applying LEM at different rates will enable us to understand the potential of microbes in nutrient uptake by plants which will add significance in reducing P levels of the soil. The data on P content in the soil after LEM application will be collected for the next 2 years, and will help us to assess whether or not LEM has helped us to lower the P concentration in the soil.
 
 # Hypothesis and objectives
 
-Hypothesis: Locally effective microbes will lower the phosphorus levels. Objectives: The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+**Hypothesis**: Locally effective microbes will lower the phosphorus levels.
+
+**Objectives:** The objective of our study is to determine phosphorus content with the application of locally effective microbes.
 
 # Material and Methods
 
@@ -41,9 +46,9 @@ Randomized complete block design with repeated measure will be used in this proj
 
 ## Statistical analysis
 
-For statistical analysis RCB design was used with the help of R-software. Response variable in this study was phosphorus content in the soil whereas LEM rates were explanatory variables.The explanatory variables were treated randomly. The alpha level (P-value) was 0.05. Functions used during analysis were ....... used from packages ....Linear assumptions were checked ....and they did/did not meet.....
+For statistical analysis, RCB design was used with the help of R-software. The response variable in this study was phosphorus content in the soil whereas LEM rates were explanatory variables. The explanatory variables were treated randomly. The alpha level (P-value) was 0.05. Functions used during analysis were janitor, read.csv, summary, glimpse, mutate, geom_boxplot, lme4, lmer, geom_hline, aes, geom_jitter, geom_theme, options, augment, raneff, used from packages tidyverse, car, broom, ggplot, multcomp.
 
-Describe here your statistical analysis, including what type of ANOVA model you ran (based on the design above), what was your response variable, what were your explanatory variables and how were the explanatory variables treated (random or fixed). Provide your alpha level. Explain which function from which package you used to analyze this data. Explain how you checked linear model assumptions and whether or not they were met.
+Linear assumptions including independence, normality, homeocedasity and outliers were checked and they did met.
 
 ## Running Code
 
@@ -139,7 +144,7 @@ ggplot(mid_dfw, aes(x = lem_rate_l_m2,
 
 ## ##Mixed-effect modeling in R
 
-We will use a mixed effect model here to address heterogeneous variance, seperate variance due to random sampling, accounting for random effects.
+We will use a mixed effect model here to address heterogeneous variance, separate variance due to random sampling, accounting for random effects.
 
 To account for more than one variance component (i.e., random effects and error), we can use function `lmer()` from package `lme4`.
 
