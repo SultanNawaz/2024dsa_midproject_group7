@@ -69,7 +69,62 @@ library(emmeans) # for model mean extraction
 ```
 
 ```{r data import}
-rcbd_df <-read.csv("../Data/wheat_nk_balkh.csv")
 
-rcbd_df
+      mid_df <- read.csv("../Data/Mid-Term Project.csv")
+
+mid_df
+
 ```
+
+# b) EDA tables
+
+```{r summary}
+summary(mid_df)
+```
+
+```{r glimpse}
+glimpse(mid_df)
+```
+
+# c) Wrangling
+
+```{r mid_dfw}
+mid_dfw <- mid_df %>%
+  mutate(Replication = factor(Replication),
+         LEM.rate..L.m2. = factor(LEM.rate..L.m2.)
+         
+         ) %>%
+  janitor::clean_names()
+
+mid_dfw
+```
+
+```{r mid-dfw}
+summary(mid_dfw)
+```
+
+Number of replicates: 4\
+Number o treatments: 3 N rates x 3 K rates = 9\
+Number of observations: 4 x 9 = 36\
+Yield: from 2795 to 7445 kg/ha
+
+# d) EDA plots
+
+```{r LEM boxplot}
+ggplot(mid_dfw, aes(x = LEM.rate..L.m2., 
+                    y = PO4.mg.kg,
+                    color = LEM.rate..L.m2.)) +
+  geom_boxplot() +
+  geom_jitter() +
+  theme(legend.position = "none")
+```
+
+# e) Statistical model
+
+## Set-to-zero vs. sum-to-zero
+
+In R, the default contrast type is set-to-zero.
+
+In research, we normally are interested in sum-to-zero contrasts.
+
+Below we change the default to sum-to-zero ("contr.sum") before fitting the model.
