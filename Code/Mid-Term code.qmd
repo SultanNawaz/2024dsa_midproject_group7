@@ -1,33 +1,42 @@
 ---
-title: "Mid_Term"
-format: html
-editor: visual
+title: "Mid-term project "
+author: "Sultan Nawaz & MUHAMMAD USMAN KHALID"
+format:
+  html:
+    code-fold: false
+    embed-resources: true
+    toc: true
+    number-sections: true
+    theme: cerulean
 ---
-
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
 
 # Mid-term project GitHub repository URL:
 
 <https://github.com/SultanNawaz/2024dsa_midproject_group7.git>\
 
--   Student 2, after cloning, does a git pull to get all these updates on their computer.\
--   Student 1 and 2 work together to update the README file. README files should explain what the repository is about, the goals of that project, who is working in it, and any other important details you may find.
-
 # Introduction
 
-With the increasing population, the world needs more food to feed on and for such purposes, intensive agriculture is taking place around the globe to feed and gain profits. To get more agricultural outputs many practices including fertilizers
+With the increasing population, the world needs more food to feed on and for such purposes, intensive agriculture is taking place around the globe to feed and gain profits. To get more agricultural outputs many practices have been implemented and adopted by the agricultural and farming community. Using inputs like phosphatic fertilizers and chemicals including weedicides and pesticides to prevent weeds and pests are harmful to both soil and plants.
 
-Gap: Previous research conducted on LEM does not give a suggestion/recommendation of application rates to crops. Additionally, phosphorus behaves differently in different soil and environmental conditions. Applying LEM at different rates will enable us to understand the potential of microbes in nutrient uptake by plants which will add significance in reducing P levels of the soil. The data on P content in the soil after LEM application will be collected for the next 2 years, and will help us to assess whether or not LEM has helped us to lower the P concentration in the soil.
+Phosphorus is an important nutrient to both plants and soil. Phosphorus has its pros and cons, therefore, its wide use is monitored to reduce environmental effects. The use of phosphorus in excess amounts is more often associated with Eutrophication, which is the leading threat to marine life.
 
-Describe here the introduction of your problem. Consider this as a shortened version of your paper, where you will briefly discuss in 3-4 paragraphs what is the issue/gap in literature, and how the data you collected will help answer this gap.
+With the increased use of phosphatic fertilizers, worldwide phosphorus reserves are declining at a very high speed. Researchers all over the globe are active in research to come up with a protocol where we could identify and use microbes to make P available which is usually bound to soil aggregates due to its complexes with Al and Fe in low pH soils and bound to Ca and Mg in alkaline soils. Much research published has witnessed the P-mineralization with the help of microbes including some bacteria and fungi. Keeping the same in mind we came up with a research where we will use some microbes and will use it with certain rates to assess what rates can be significant to use.
+
+**Research gap:**
+
+Previous research conducted on LEM does not give a suggestion/recommendation for the application rates to crops. Additionally, phosphorus behaves differently in different soil and environmental conditions. Applying LEM at different rates will enable us to understand the potential of microbes in nutrient uptake by plants which will add significance in reducing P levels of the soil. The data on P content in the soil after LEM application will be collected for the next 2 years, and will help us to assess whether or not LEM has helped us to lower the P concentration in the soil.
 
 # Hypothesis and objectives
 
+<<<<<<< HEAD
+**Hypothesis**: Locally effective microbes will lower the phosphorus levels.
+
+**Objectives:** The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+=======
 Hypothesis: Locally effective microbes will lower the phosphorus levels.
 
 Objectives: The objective of our study is to determine phosphorus content with the application of locally effective microbes.
+>>>>>>> 3dcefc35e6b4895ccaffc47482881203e409a068
 
 # Material and Methods
 
@@ -43,11 +52,13 @@ Randomized complete block design with repeated measure will be used in this proj
 
 ## Statistical analysis
 
-For statistical analysis RCB design was used with the help of R-software. Response variable in this study was phosphorus content in the soil whereas LEM rates were explanatory variables.The explanatory variables were treated randomly. The alpha level (P-value) was 0.05. Functions used during analysis were ....... used from packages ....Linear assumptions were checked ....and they did/did not meet.....
+For statistical analysis, RCB design was used with the help of R-software. The response variable in this study was phosphorus content in the soil whereas LEM rates were explanatory variables. The explanatory variables were treated randomly. The alpha level (P-value) was 0.05. Functions used during analysis were janitor, read.csv, summary, glimpse, mutate, geom_boxplot, lme4, lmer, geom_hline, aes, geom_jitter, geom_theme, options, augment, raneff, used from packages tidyverse, car, broom, ggplot, multcomp.
 
-Describe here your statistical analysis, including what type of ANOVA model you ran (based on the design above), what was your response variable, what were your explanatory variables and how were the explanatory variables treated (random or fixed). Provide your alpha level. Explain which function from which package you used to analyze this data. Explain how you checked linear model assumptions and whether or not they were met.
+Linear assumptions including independence, normality, homeocedasity and outliers were checked and they did met.
 
 ## Running Code
+
+##Here we will load the packages that we think will be used in this data set
 
 ```{r}
 install.packages("tidyverse")
@@ -56,6 +67,8 @@ install.packages("lme4")
 install.packages("broom")
 install.packages("emmeans")
 install.packages("multcomp")
+
+#Loading packaes to library
 
 library(tidyverse) # for data wrangling and plotting
 
@@ -70,7 +83,8 @@ library(emmeans) # for model mean extraction
 
 ```
 
-```{r data import}
+```{##Here we are importing our data from the source file}
+{r data import}
 
       mid_df <- read.csv("../Data/Mid-Term Project.csv")
 
@@ -78,19 +92,29 @@ mid_df
 
 ```
 
+##data imported looks okay to run for exploratory data analysis
+
 # b) EDA tables
 
-```{r summary}
+```{##We are running code for explanatory data analysis to understand data,idetify relationship, check data quality etc.}
+
+{r summary}
 summary(mid_df)
 ```
 
-```{r glimpse}
+##The summary above shows that there are 9 treatments with LEM rates of 0, 1.8, and 3.6 where PO4 ranged from a minimum of 12.02 to a maximum of 147.81
+
+```{##WE will use glimpse here to see how our data looks like,}
+
+{r glimpse}
 glimpse(mid_df)
 ```
 
 # c) Wrangling
 
-```{r mid_dfw}
+```{## Here come the process of gathering and transforming the data according to our required analysis.}
+
+{r mid_dfw}
 mid_dfw <- mid_df %>%
   mutate(Replication = factor(Replication),
          LEM.rate..L.m2. = factor(LEM.rate..L.m2.)
@@ -99,20 +123,19 @@ mid_dfw <- mid_df %>%
   janitor::clean_names()
 
 mid_dfw
+
+## Additionally we did use the Janitor function to clean the names and make it more presntable.  
 ```
 
 ```{r mid-dfw}
 summary(mid_dfw)
 ```
 
-Number of replicates: 4\
-Number o treatments: 3 N rates x 3 K rates = 9\
-Number of observations: 4 x 9 = 36\
-Yield: from 2795 to 7445 kg/ha
-
 # d) EDA plots
 
-```{r LEM boxplot}
+```{## In this chunk we presnted our data in plot (boxplot) where data points of data sets are presented with three different colors, each representing level/rate of LEM.}
+
+{r LEM boxplot}
 ggplot(mid_dfw, aes(x = lem_rate_l_m2, 
                     y = po4_mg_kg,
                     color = lem_rate_l_m2)) +
@@ -121,13 +144,13 @@ ggplot(mid_dfw, aes(x = lem_rate_l_m2,
   theme(legend.position = "none")
 ```
 
+##Box plots here suggest that LEM rate of Zero has higher values but we can confirm it after running the models and see ANOVA
+
 # e) Statistical model
 
-## Mixed-effect modeling in R
+## ##Mixed-effect modeling in R
 
-Now that we are going to treat **blocks as random effect**, we will need to use a different function.
-
-That is because `lm()` only handles one variance component (the error itself).
+We will use a mixed effect model here to address heterogeneous variance, separate variance due to random sampling, accounting for random effects.
 
 To account for more than one variance component (i.e., random effects and error), we can use function `lmer()` from package `lme4`.
 
@@ -147,48 +170,39 @@ mid_dfw
 summary(mid_mix_mod)
 ```
 
-Notice now how the `summary()` above has a new section for **random effects**.
-
-The variance attributed to blocks is 59932, and that still left in the residual error is 376416.
-
-Therefore, blocks are responsible for 59932 / (59932 + 376416) = **14% of the total noise** in this model.
-
 # f) ANOVA table
 
-```{r ANOVA}
+```{## Here we are running ANOVA to identify significant effect of independent variables over dependent variables, test our hypothesis. ANOVA allow us determine significance based on p-value, and provide a framework for multiple comparisons.}
+
+{r ANOVA}
 Anova(mid_mix_mod, type=3)
 ```
 
-Notice how this table is now titled "Analysis of Deviance Table". That's because we are using REML instead of mean squares.
+\## Anova table illustrated that there was no significant effect of our independent variables
 
-Also notice how rep (i.e., block in this case) does not appear in the ANOVA table above. That's because it only displays **fixed effects**.
-
-As before, since the interaction is significant here, we should extract means and perform pairwise comparisons for the interaction term.
-
-Before we do that, let's check our model assumptions. Remember, a model is only valid for inference (i.e., means and pwc) IF if fulfills the linear model assumptions.
+A model is only valid for inference (i.e., means and pwc) IF it fulfills the linear model assumptions.
 
 # g) Linear model assumptions
 
 ## Extracting residuals
 
-First, let's extract our model residuals, and also create studentized residuals.
+\## Here we will extract our model residuals, and create studentized residuals.
 
-```{r rcbd_mix_resid}
+The linear model assumptions are:
+
+-   Independence (no pattern)\
+-   Variance homogeneity (homoscedasticity)\
+-   Normality\
+-   Outlier detection (\< -3 or \> 3)
+
+```{r mid_mix_resid}
 library(broom.mixed)
-install.packages("broom.mixed")
 
 mid_mix_resid <- augment(mid_mix_mod) %>%
   mutate(.studresid=rstudent(mid_mix_mod))
 
 mid_mix_resid
 ```
-
-Now, let's recap the linear model assumptions:
-
--   Independence (no pattern)\
--   Variance homogeneity (homoscedasticity)\
--   Normality\
--   Outlier detection (\< -3 or \> 3)
 
 One difference in mixed models is that the 3 first assumptions are also applied to the **random effects**, so we need to check it for them as well.
 
@@ -225,7 +239,7 @@ ggplot(mid_mix_resid, aes(x=.fitted, y=.studresid))+
   geom_point(shape = 20,
              fill = "blue", 
              size = 3,
-             alpha = .0)+
+             alpha = .7) +
   geom_smooth()+
   geom_hline(yintercept = c(-3,3), color = "red")+
   theme_bw()
@@ -264,8 +278,7 @@ ggplot(mid_mix_resid, aes(x=.studresid))+
 
 # g) Final plot
 
-Let's plot our results, including both **raw data** (for allowing our audience to inspect data distribution) and **statistical model summary (i.e., letter separation)** for inference purposes.\
-Let's make this plot publication ready.
+##After going through the linear assumption we will run codes to make the final plot to inspect data distribution of both raw data and statistical model summary with letter separation. \
 
 ```{r mid final plot}
 ggplot(mapping = aes(fill = lem_rate_l_m2))+
@@ -290,3 +303,5 @@ ggsave("../Output//mid_mix_means.png",
        width = 8,
        height = 5)
 ```
+
+##Final plot illustrates no significance at all hence box plots are not labelled with the letters. Concluding that LEM as an independent variable has not shown any significant effect in lowering the P content of soil during the study period.
