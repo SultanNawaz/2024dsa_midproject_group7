@@ -111,9 +111,9 @@ Yield: from 2795 to 7445 kg/ha
 # d) EDA plots
 
 ```{r LEM boxplot}
-ggplot(mid_dfw, aes(x = LEM.rate..L.m2., 
-                    y = PO4.mg.kg,
-                    color = LEM.rate..L.m2.)) +
+ggplot(mid_dfw, aes(x = lem_rate_l_m2, 
+                    y = po4_mg_kg,
+                    color = lem_rate_l_m2)) +
   geom_boxplot() +
   geom_jitter() +
   theme(legend.position = "none")
@@ -121,10 +121,170 @@ ggplot(mid_dfw, aes(x = LEM.rate..L.m2.,
 
 # e) Statistical model
 
-## Set-to-zero vs. sum-to-zero
+## Mixed-effect modeling in R
 
-In R, the default contrast type is set-to-zero.
+Now that we are going to treat **blocks as random effect**, we will need to use a different function.
 
-In research, we normally are interested in sum-to-zero contrasts.
+That is because `lm()` only handles one variance component (the error itself).
 
-Below we change the default to sum-to-zero ("contr.sum") before fitting the model.
+To account for more than one variance component (i.e., random effects and error), we can use function `lmer()` from package `lme4`.
+
+```{r model}
+# Changing to sum-to-zero contrast
+options(contrasts = c("contr.sum", "contr.poly"))
+
+# Model fitting
+mid_mix_mod <- lmer(po4_mg_kg ~ lem_rate_l_m2 +
+                       (1|replication),
+                     data = mid_dfw
+                       )
+
+mid_dfw
+
+# Summary
+summary(mid_mix_mod)
+```
+
+Notice now how the `summary()` above has a new section for **random effects**.
+
+The variance attributed to blocks is 59932, and that still left in the residual error is 376416.
+
+Therefore, blocks are responsible for 59932 / (59932 + 376416) = **14% of the total noise** in this model.
+
+# f) ANOVA table
+
+```{r ANOVA}
+Anova(mid_mix_mod, type=3)
+```
+
+Notice how this table is now titled "Analysis of Deviance Table". That's because we are using REML instead of mean squares.
+
+Also notice how rep (i.e., block in this case) does not appear in the ANOVA table above. That's because it only displays **fixed effects**.
+
+As before, since the interaction is significant here, we should extract means and perform pairwise comparisons for the interaction term.
+
+Before we do that, let's check our model assumptions. Remember, a model is only valid for inference (i.e., means and pwc) IF if fulfills the linear model assumptions.
+
+# g) Linear model assumptions
+
+## Extracting residuals
+
+First, let's extract our model residuals, and also create studentized residuals.
+
+```{r rcbd_mix_resid}
+library(broom.mixed)
+install.packages("broom.mixed")
+
+mid_mix_resid <- augment(mid_mix_mod) %>%
+  mutate(.studresid=rstudent(mid_mix_mod))
+
+mid_mix_resid
+```
+
+Now, let's recap the linear model assumptions:
+
+-   Independence (no pattern)\
+-   Variance homogeneity (homoscedasticity)\
+-   Normality\
+-   Outlier detection (\< -3 or \> 3)
+
+One difference in mixed models is that the 3 first assumptions are also applied to the **random effects**, so we need to check it for them as well.
+
+### Random effects are iid \~ N(0,var_a)
+
+```{r randeff_rep}
+randeff_rep <- ranef(mid_mix_mod)$rep
+
+randeff_rep
+```
+
+For random effects with so few levels (i.e., 4 since that's the number of blocks), the QQ plot is one of the only ways to check for assumptions on random effects.
+
+```{r QQ plot for random effects}
+ggplot(randeff_rep, aes(sample=`(Intercept)`))+
+  stat_qq(  shape = 20,
+            fill = "blue", 
+            size = 3,
+            alpha = .8
+  )+
+  stat_qq_line()+
+  labs(x = "Theoretical quantile",
+       y = "Sample quantile")+
+  theme_bw()
+```
+
+Nothing to worry here, especially since we only have 4 points.
+
+### Within-group errors are iid \~ N(0, var_e)
+
+```{r }
+ggplot(mid_mix_resid, aes(x=.fitted, y=.studresid))+
+  geom_hline(yintercept = 0, color="red")+
+  geom_point(shape = 20,
+             fill = "blue", 
+             size = 3,
+             alpha = .0)+
+  geom_smooth()+
+  geom_hline(yintercept = c(-3,3), color = "red")+
+  theme_bw()
+```
+
+-   **Independence**: seems liker there is a potential pattern, but since error bands comprise 0 on the y-axis, I'm not worried.
+
+-   **Variance homoscedastic**: seems constant across the x-axis.
+
+-   **Outliers**: nothing outside the -3,3 boundaries.
+
+```{r}
+ggplot(mid_mix_resid, aes(sample=.studresid))+
+  stat_qq(  shape = 20,
+            fill = "blue", 
+            size = 3,
+            alpha = .8
+  )+
+  stat_qq_line()+
+  labs(x = "Theoretical quantile",
+       y = "Sample quantile")+
+  theme_bw()
+```
+
+```{r}
+ggplot(mid_mix_resid, aes(x=.studresid))+
+  geom_density(color = "black",
+               fill = "blue",
+               alpha = .8)+
+  scale_x_continuous(breaks = c(-3,0,3), limits = c(-3,3))+
+  theme_bw()
+
+```
+
+-   **Normality**: residuals seem normal.
+
+# g) Final plot
+
+Let's plot our results, including both **raw data** (for allowing our audience to inspect data distribution) and **statistical model summary (i.e., letter separation)** for inference purposes.\
+Let's make this plot publication ready.
+
+```{r mid final plot}
+ggplot(mapping = aes(fill = lem_rate_l_m2))+
+  # Raw data and boxplots  
+  geom_boxplot(data = mid_dfw,
+               aes(x = lem_rate_l_m2, y = po4_mg_kg),
+               alpha = .8) +
+  geom_jitter(data = mid_dfw,
+               aes(x = lem_rate_l_m2, y = po4_mg_kg),
+              shape = 20,
+              size = 3,
+              alpha = .7) +
+   
+  labs(x = "LEM rate (l/m2)",
+       y = "PO4 (mg/kg)") +
+  scale_fill_viridis_d() +
+  theme(panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank(),
+        legend.position = "none")
+
+ggsave("../Output//mid_mix_means.png",
+       width = 8,
+       height = 5)
+```
